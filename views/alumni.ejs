@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Unique ID Login</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<div class="container">
+		<h1>Enter Unique ID</h1>
+		<input type="text" id="uniqueIdInput" placeholder="Enter Unique ID">
+		<button id="loginButton">Login</button>
+		<p id="errorMessage" class="error-message"></p>
+	</div>
+
+	<script>
+        document.getElementById('loginButton').addEventListener('click', function() {
+  var uniqueId = document.getElementById('uniqueIdInput').value;
+
+  // Send uniqueId to the backend for verification
+  fetch('/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ uniqueId: uniqueId })
+  })
+  .then(function(response) {
+    if (response.ok) {
+      window.location.href = '/dashboard.html'; // Redirect to dashboard if login successful
+    } else {
+      document.getElementById('errorMessage').textContent = 'Invalid Unique ID';
+    }
+  })
+  .catch(function(error) {
+    console.log('Error:', error);
+  });
+});
+
+    </script>
+</body>
+</html>
